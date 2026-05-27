@@ -1,8 +1,0 @@
-{
-  "evidence_metadata": {
-    "artifact": "cloudfront/logging-config.json"
-  },
-  "summary": {
-    "configured_distribution_count": 0
-  }
-}
