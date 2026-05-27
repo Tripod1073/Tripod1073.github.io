@@ -1,0 +1,21 @@
+{
+    "KeyMetadata": {
+        "AWSAccountId": "725644097230",
+        "KeyId": "65633ecd-2eb0-4301-aaa1-3696409cbbc2",
+        "Arn": "arn:aws:kms:us-east-1:725644097230:key/65633ecd-2eb0-4301-aaa1-3696409cbbc2",
+        "CreationDate": "2026-05-11T09:21:32.018000-04:00",
+        "Enabled": true,
+        "Description": "Centralized KMS key for immutable security log archive encryption",
+        "KeyUsage": "ENCRYPT_DECRYPT",
+        "KeyState": "Enabled",
+        "Origin": "AWS_KMS",
+        "KeyManager": "CUSTOMER",
+        "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+        "KeySpec": "SYMMETRIC_DEFAULT",
+        "EncryptionAlgorithms": [
+            "SYMMETRIC_DEFAULT"
+        ],
+        "MultiRegion": false,
+        "CurrentKeyMaterialId": "a0e1e975e65c71713ddb9d9197a547e4e90c7c92f5941e82e7ddcded8de12f25"
+    }
+}

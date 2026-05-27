@@ -1,0 +1,416 @@
+{
+  "evidence_metadata": {
+    "artifact": "monitoring/cloudwatch-alarms.json",
+    "collector_function": "collect_monitoring",
+    "region": null
+  },
+  "summary": {
+    "metric_alarm_count": 9,
+    "composite_alarm_count": 0
+  },
+  "expected": {
+    "alarm_names": null
+  },
+  "actual": {
+    "metric_alarms": [
+      {
+        "alarm_name": "cloudtrail-configuration-changes",
+        "alarm_arn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:cloudtrail-configuration-changes",
+        "state_value": "OK",
+        "namespace": "Security/AuditIntegrity",
+        "metric_name": "CloudTrailConfigChanges",
+        "comparison_operator": "GreaterThanOrEqualToThreshold",
+        "threshold": 1.0,
+        "evaluation_periods": 1,
+        "treat_missing_data": "notBreaching",
+        "alarm_actions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ]
+      },
+      {
+        "alarm_name": "cloudtrail-logging-stopped",
+        "alarm_arn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:cloudtrail-logging-stopped",
+        "state_value": "OK",
+        "namespace": "Security/AuditIntegrity",
+        "metric_name": "CloudTrailLoggingStopped",
+        "comparison_operator": "GreaterThanOrEqualToThreshold",
+        "threshold": 1.0,
+        "evaluation_periods": 1,
+        "treat_missing_data": "notBreaching",
+        "alarm_actions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ]
+      },
+      {
+        "alarm_name": "firehose-delivery-failure-security-log-delivery",
+        "alarm_arn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:firehose-delivery-failure-security-log-delivery",
+        "state_value": "INSUFFICIENT_DATA",
+        "namespace": "AWS/Firehose",
+        "metric_name": "DeliveryToS3.DataFreshness",
+        "comparison_operator": "GreaterThanThreshold",
+        "threshold": 600.0,
+        "evaluation_periods": 1,
+        "treat_missing_data": "missing",
+        "alarm_actions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ]
+      },
+      {
+        "alarm_name": "firehose-delivery-failure-security-log-delivery-dev",
+        "alarm_arn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:firehose-delivery-failure-security-log-delivery-dev",
+        "state_value": "INSUFFICIENT_DATA",
+        "namespace": "AWS/Firehose",
+        "metric_name": "DeliveryToS3.DataFreshness",
+        "comparison_operator": "GreaterThanThreshold",
+        "threshold": 600.0,
+        "evaluation_periods": 1,
+        "treat_missing_data": "missing",
+        "alarm_actions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-dev"
+        ]
+      },
+      {
+        "alarm_name": "flow-log-configuration-changes",
+        "alarm_arn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:flow-log-configuration-changes",
+        "state_value": "OK",
+        "namespace": "Security/NetworkLogging",
+        "metric_name": "FlowLogConfigChanges",
+        "comparison_operator": "GreaterThanOrEqualToThreshold",
+        "threshold": 1.0,
+        "evaluation_periods": 1,
+        "treat_missing_data": "notBreaching",
+        "alarm_actions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ]
+      },
+      {
+        "alarm_name": "flow-log-delivery-access-denied",
+        "alarm_arn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:flow-log-delivery-access-denied",
+        "state_value": "OK",
+        "namespace": "Security/NetworkLogging",
+        "metric_name": "FlowLogDeliveryDenied",
+        "comparison_operator": "GreaterThanOrEqualToThreshold",
+        "threshold": 1.0,
+        "evaluation_periods": 1,
+        "treat_missing_data": "notBreaching",
+        "alarm_actions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ]
+      },
+      {
+        "alarm_name": "log-archive-policy-modified",
+        "alarm_arn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:log-archive-policy-modified",
+        "state_value": "OK",
+        "namespace": "Security/AuditIntegrity",
+        "metric_name": "LogArchivePolicyChange",
+        "comparison_operator": "GreaterThanOrEqualToThreshold",
+        "threshold": 1.0,
+        "evaluation_periods": 1,
+        "treat_missing_data": "notBreaching",
+        "alarm_actions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ]
+      },
+      {
+        "alarm_name": "root-account-usage",
+        "alarm_arn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:root-account-usage",
+        "state_value": "OK",
+        "namespace": "Security/AccessControl",
+        "metric_name": "RootAccountUsage",
+        "comparison_operator": "GreaterThanOrEqualToThreshold",
+        "threshold": 1.0,
+        "evaluation_periods": 1,
+        "treat_missing_data": "notBreaching",
+        "alarm_actions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ]
+      },
+      {
+        "alarm_name": "unauthorized-api-calls",
+        "alarm_arn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:unauthorized-api-calls",
+        "state_value": "ALARM",
+        "namespace": "Security/AccessControl",
+        "metric_name": "UnauthorizedApiCalls",
+        "comparison_operator": "GreaterThanOrEqualToThreshold",
+        "threshold": 1.0,
+        "evaluation_periods": 1,
+        "treat_missing_data": "notBreaching",
+        "alarm_actions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "expected_alarm_names_provided": false,
+    "all_expected_alarm_names_found": null,
+    "alarms_in_alarm_state": [
+      "unauthorized-api-calls"
+    ]
+  },
+  "raw": {
+    "metric_alarms": [
+      {
+        "AlarmName": "cloudtrail-configuration-changes",
+        "AlarmArn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:cloudtrail-configuration-changes",
+        "AlarmDescription": "Alert: CloudTrail configuration was modified. This may indicate an attempt to disable audit logging. Investigate immediately.",
+        "AlarmConfigurationUpdatedTimestamp": "2026-05-11T09:21:45.576000-04:00",
+        "ActionsEnabled": true,
+        "OKActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "AlarmActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: 1 datapoint [0.0 (11/05/26 13:17:00)] was not greater than or equal to the threshold (1.0).",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-05-11T13:22:39.301+0000\",\"startDate\":\"2026-05-11T13:17:00.000+0000\",\"statistic\":\"Sum\",\"period\":300,\"recentDatapoints\":[0.0],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-05-11T13:17:00.000+0000\",\"sampleCount\":360.0,\"value\":0.0}]}",
+        "StateUpdatedTimestamp": "2026-05-11T09:22:39.302000-04:00",
+        "MetricName": "CloudTrailConfigChanges",
+        "Namespace": "Security/AuditIntegrity",
+        "Statistic": "Sum",
+        "Dimensions": [],
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-05-11T09:22:39.302000-04:00"
+      },
+      {
+        "AlarmName": "cloudtrail-logging-stopped",
+        "AlarmArn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:cloudtrail-logging-stopped",
+        "AlarmDescription": "CRITICAL: CloudTrail logging has been stopped. Audit trail is blind. Immediate investigation required.",
+        "AlarmConfigurationUpdatedTimestamp": "2026-05-11T09:21:45.869000-04:00",
+        "ActionsEnabled": true,
+        "OKActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "AlarmActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: 1 datapoint [0.0 (11/05/26 13:17:00)] was not greater than or equal to the threshold (1.0).",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-05-11T13:22:48.894+0000\",\"startDate\":\"2026-05-11T13:17:00.000+0000\",\"statistic\":\"Sum\",\"period\":300,\"recentDatapoints\":[0.0],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-05-11T13:17:00.000+0000\",\"sampleCount\":360.0,\"value\":0.0}]}",
+        "StateUpdatedTimestamp": "2026-05-11T09:22:48.897000-04:00",
+        "MetricName": "CloudTrailLoggingStopped",
+        "Namespace": "Security/AuditIntegrity",
+        "Statistic": "Sum",
+        "Dimensions": [],
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-05-11T09:22:48.897000-04:00"
+      },
+      {
+        "AlarmName": "firehose-delivery-failure-security-log-delivery",
+        "AlarmArn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:firehose-delivery-failure-security-log-delivery",
+        "AlarmDescription": "Alert: Firehose stream security-log-delivery has undelivered records older than 10 minutes. S3 delivery may be failing. Check KMS key access and bucket permissions.",
+        "AlarmConfigurationUpdatedTimestamp": "2026-05-11T09:21:45.864000-04:00",
+        "ActionsEnabled": true,
+        "OKActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "AlarmActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "INSUFFICIENT_DATA",
+        "StateReason": "Insufficient Data: 1 datapoint was unknown.",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-05-11T13:44:03.738+0000\",\"statistic\":\"Maximum\",\"period\":300,\"recentDatapoints\":[],\"threshold\":600.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-05-11T13:39:00.000+0000\"}]}",
+        "StateUpdatedTimestamp": "2026-05-11T09:44:03.739000-04:00",
+        "MetricName": "DeliveryToS3.DataFreshness",
+        "Namespace": "AWS/Firehose",
+        "Statistic": "Maximum",
+        "Dimensions": [
+          {
+            "Name": "DeliveryStreamName",
+            "Value": "security-log-delivery"
+          }
+        ],
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 600.0,
+        "ComparisonOperator": "GreaterThanThreshold",
+        "TreatMissingData": "missing",
+        "StateTransitionedTimestamp": "2026-05-11T09:44:03.739000-04:00"
+      },
+      {
+        "AlarmName": "firehose-delivery-failure-security-log-delivery-dev",
+        "AlarmArn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:firehose-delivery-failure-security-log-delivery-dev",
+        "AlarmDescription": "Alert: Firehose stream security-log-delivery-dev has undelivered records older than 10 minutes. S3 delivery may be failing. Check KMS key access and bucket permissions.",
+        "AlarmConfigurationUpdatedTimestamp": "2026-04-15T15:36:27.732000-04:00",
+        "ActionsEnabled": true,
+        "OKActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-dev"
+        ],
+        "AlarmActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-dev"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "INSUFFICIENT_DATA",
+        "StateReason": "Insufficient Data: 1 datapoint was unknown.",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-04-15T19:58:43.650+0000\",\"statistic\":\"Maximum\",\"period\":300,\"recentDatapoints\":[],\"threshold\":600.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-04-15T19:53:00.000+0000\"}]}",
+        "StateUpdatedTimestamp": "2026-04-15T15:58:43.652000-04:00",
+        "MetricName": "DeliveryToS3.DataFreshness",
+        "Namespace": "AWS/Firehose",
+        "Statistic": "Maximum",
+        "Dimensions": [
+          {
+            "Name": "DeliveryStreamName",
+            "Value": "security-log-delivery-dev"
+          }
+        ],
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 600.0,
+        "ComparisonOperator": "GreaterThanThreshold",
+        "TreatMissingData": "missing",
+        "StateTransitionedTimestamp": "2026-04-15T15:58:43.652000-04:00"
+      },
+      {
+        "AlarmName": "flow-log-configuration-changes",
+        "AlarmArn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:flow-log-configuration-changes",
+        "AlarmDescription": "Alert: VPC Flow Log configuration was created or deleted. If unexpected, network traffic capture may have been disrupted. Investigate immediately.",
+        "AlarmConfigurationUpdatedTimestamp": "2026-05-11T09:21:45.715000-04:00",
+        "ActionsEnabled": true,
+        "OKActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "AlarmActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: 1 datapoint [0.0 (11/05/26 13:38:00)] was not greater than or equal to the threshold (1.0).",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-05-11T13:43:22.733+0000\",\"startDate\":\"2026-05-11T13:38:00.000+0000\",\"statistic\":\"Sum\",\"period\":300,\"recentDatapoints\":[0.0],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-05-11T13:38:00.000+0000\",\"sampleCount\":5952.0,\"value\":0.0}]}",
+        "StateUpdatedTimestamp": "2026-05-11T09:43:22.735000-04:00",
+        "MetricName": "FlowLogConfigChanges",
+        "Namespace": "Security/NetworkLogging",
+        "Statistic": "Sum",
+        "Dimensions": [],
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-05-11T09:43:22.735000-04:00"
+      },
+      {
+        "AlarmName": "flow-log-delivery-access-denied",
+        "AlarmArn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:flow-log-delivery-access-denied",
+        "AlarmDescription": "Alert: VPC Flow Log delivery to S3 was denied. Logs may not be reaching the archive. Check bucket policy and KMS key permissions.",
+        "AlarmConfigurationUpdatedTimestamp": "2026-05-11T09:21:45.581000-04:00",
+        "ActionsEnabled": true,
+        "OKActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "AlarmActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: 1 datapoint [0.0 (11/05/26 13:17:00)] was not greater than or equal to the threshold (1.0).",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-05-11T13:22:31.259+0000\",\"startDate\":\"2026-05-11T13:17:00.000+0000\",\"statistic\":\"Sum\",\"period\":300,\"recentDatapoints\":[0.0],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-05-11T13:17:00.000+0000\",\"sampleCount\":360.0,\"value\":0.0}]}",
+        "StateUpdatedTimestamp": "2026-05-11T09:22:31.260000-04:00",
+        "MetricName": "FlowLogDeliveryDenied",
+        "Namespace": "Security/NetworkLogging",
+        "Statistic": "Sum",
+        "Dimensions": [],
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-05-11T09:22:31.260000-04:00"
+      },
+      {
+        "AlarmName": "log-archive-policy-modified",
+        "AlarmArn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:log-archive-policy-modified",
+        "AlarmDescription": "CRITICAL: The central security log archive bucket policy was modified. This may indicate an attempt to weaken access controls or enable unauthorized log access. Investigate immediately.",
+        "AlarmConfigurationUpdatedTimestamp": "2026-05-11T09:21:45.785000-04:00",
+        "ActionsEnabled": true,
+        "OKActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "AlarmActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: 1 datapoint [0.0 (11/05/26 13:34:00)] was not greater than or equal to the threshold (1.0).",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-05-11T13:39:12.741+0000\",\"startDate\":\"2026-05-11T13:34:00.000+0000\",\"statistic\":\"Sum\",\"period\":300,\"recentDatapoints\":[0.0],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-05-11T13:34:00.000+0000\",\"sampleCount\":2704.0,\"value\":0.0}]}",
+        "StateUpdatedTimestamp": "2026-05-11T09:39:12.743000-04:00",
+        "MetricName": "LogArchivePolicyChange",
+        "Namespace": "Security/AuditIntegrity",
+        "Statistic": "Sum",
+        "Dimensions": [],
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-05-11T09:39:12.743000-04:00"
+      },
+      {
+        "AlarmName": "root-account-usage",
+        "AlarmArn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:root-account-usage",
+        "AlarmDescription": "Alert: Root account API call detected. Root usage should not occur in normal operations. Investigate immediately.",
+        "AlarmConfigurationUpdatedTimestamp": "2026-05-11T09:21:45.770000-04:00",
+        "ActionsEnabled": true,
+        "OKActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "AlarmActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: 1 datapoint [0.0 (11/05/26 13:17:00)] was not greater than or equal to the threshold (1.0).",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-05-11T13:22:30.152+0000\",\"startDate\":\"2026-05-11T13:17:00.000+0000\",\"statistic\":\"Sum\",\"period\":300,\"recentDatapoints\":[0.0],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-05-11T13:17:00.000+0000\",\"sampleCount\":360.0,\"value\":0.0}]}",
+        "StateUpdatedTimestamp": "2026-05-11T09:22:30.153000-04:00",
+        "MetricName": "RootAccountUsage",
+        "Namespace": "Security/AccessControl",
+        "Statistic": "Sum",
+        "Dimensions": [],
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-05-11T09:22:30.153000-04:00"
+      },
+      {
+        "AlarmName": "unauthorized-api-calls",
+        "AlarmArn": "arn:aws:cloudwatch:us-east-1:725644097230:alarm:unauthorized-api-calls",
+        "AlarmDescription": "Alert: Unauthorized API calls detected. May indicate credential misuse or lateral movement attempt.",
+        "AlarmConfigurationUpdatedTimestamp": "2026-05-11T09:21:45.893000-04:00",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:us-east-1:725644097230:security-alerts-security"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "ALARM",
+        "StateReason": "Threshold Crossed: 1 datapoint [250.0 (11/05/26 13:17:00)] was greater than or equal to the threshold (1.0).",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-05-11T13:22:34.647+0000\",\"startDate\":\"2026-05-11T13:17:00.000+0000\",\"statistic\":\"Sum\",\"period\":300,\"recentDatapoints\":[250.0],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-05-11T13:17:00.000+0000\",\"sampleCount\":360.0,\"value\":250.0}]}",
+        "StateUpdatedTimestamp": "2026-05-11T09:22:34.649000-04:00",
+        "MetricName": "UnauthorizedApiCalls",
+        "Namespace": "Security/AccessControl",
+        "Statistic": "Sum",
+        "Dimensions": [],
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-05-11T09:22:34.649000-04:00"
+      }
+    ],
+    "composite_alarms": []
+  }
+}

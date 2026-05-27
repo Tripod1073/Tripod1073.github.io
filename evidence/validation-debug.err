@@ -1,0 +1,361 @@
++ set -euo pipefail
++ echo 'Running OFFLINE validation against captured evidence'
++ REPORT_FILE=validation-report.json
+++ mktemp
++ TMP_RESULTS=/tmp/tmp.JJCShTdp6V
++ failures=0
++ echo '[]'
++ check_file cloudtrail/org-trail-config.json
++ local file=cloudtrail/org-trail-config.json
++ [[ ! -f cloudtrail/org-trail-config.json ]]
++ jq . cloudtrail/org-trail-config.json
++ return 0
++ check_file cloudtrail/event-selectors.json
++ local file=cloudtrail/event-selectors.json
++ [[ ! -f cloudtrail/event-selectors.json ]]
++ jq . cloudtrail/event-selectors.json
++ return 0
++ jq -e '
+     .summary.trail_found == true and
+     .validation.is_organization_trail == true
+   ' cloudtrail/org-trail-config.json
++ jq -e '
+     ((.EventSelectors // []) | length > 0) or
+     ((.AdvancedEventSelectors // []) | length > 0)
+   ' cloudtrail/event-selectors.json
++ record_pass AU-2 'CloudTrail organization trail and event selectors are present'
++ local control_id=AU-2
++ local 'message=CloudTrail organization trail and event selectors are present'
++ pass AU-2
++ echo 'PASS: AU-2'
++ add_result AU-2 pass 'CloudTrail organization trail and event selectors are present'
++ local control_id=AU-2
++ local status=pass
++ local 'message=CloudTrail organization trail and event selectors are present'
++ jq --arg control_id AU-2 --arg status pass --arg message 'CloudTrail organization trail and event selectors are present' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file cloudtrail/event-selectors.json
++ local file=cloudtrail/event-selectors.json
++ [[ ! -f cloudtrail/event-selectors.json ]]
++ jq . cloudtrail/event-selectors.json
++ return 0
++ jq -e '
+     (
+       ((.EventSelectors // []) | length > 0) or
+       ((.AdvancedEventSelectors // []) | length > 0)
+     )
+   ' cloudtrail/event-selectors.json
++ record_pass AU-3 'CloudTrail event selector evidence shows audit event capture'
++ local control_id=AU-3
++ local 'message=CloudTrail event selector evidence shows audit event capture'
++ pass AU-3
++ echo 'PASS: AU-3'
++ add_result AU-3 pass 'CloudTrail event selector evidence shows audit event capture'
++ local control_id=AU-3
++ local status=pass
++ local 'message=CloudTrail event selector evidence shows audit event capture'
++ jq --arg control_id AU-3 --arg status pass --arg message 'CloudTrail event selector evidence shows audit event capture' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file monitoring/cloudwatch-alarms.json
++ local file=monitoring/cloudwatch-alarms.json
++ [[ ! -f monitoring/cloudwatch-alarms.json ]]
++ jq . monitoring/cloudwatch-alarms.json
++ return 0
++ jq -e '
+     ((.summary.metric_alarm_count // 0) + (.summary.composite_alarm_count // 0)) >= 3
+   ' monitoring/cloudwatch-alarms.json
++ record_pass AU-6 'Baseline CloudWatch alarm coverage is present'
++ local control_id=AU-6
++ local 'message=Baseline CloudWatch alarm coverage is present'
++ pass AU-6
++ echo 'PASS: AU-6'
++ add_result AU-6 pass 'Baseline CloudWatch alarm coverage is present'
++ local control_id=AU-6
++ local status=pass
++ local 'message=Baseline CloudWatch alarm coverage is present'
++ jq --arg control_id AU-6 --arg status pass --arg message 'Baseline CloudWatch alarm coverage is present' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file cloudtrail/org-trail-config.json
++ local file=cloudtrail/org-trail-config.json
++ [[ ! -f cloudtrail/org-trail-config.json ]]
++ jq . cloudtrail/org-trail-config.json
++ return 0
++ jq -e '
+     .summary.trail_found == true and
+     .validation.is_multi_region == true
+   ' cloudtrail/org-trail-config.json
++ record_pass AU-8 'CloudTrail is configured as multi-region'
++ local control_id=AU-8
++ local 'message=CloudTrail is configured as multi-region'
++ pass AU-8
++ echo 'PASS: AU-8'
++ add_result AU-8 pass 'CloudTrail is configured as multi-region'
++ local control_id=AU-8
++ local status=pass
++ local 'message=CloudTrail is configured as multi-region'
++ jq --arg control_id AU-8 --arg status pass --arg message 'CloudTrail is configured as multi-region' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file s3/object-lock-config.json
++ local file=s3/object-lock-config.json
++ [[ ! -f s3/object-lock-config.json ]]
++ jq . s3/object-lock-config.json
++ return 0
++ jq -e '
+     .ObjectLockConfiguration.ObjectLockEnabled == "Enabled" and
+     .ObjectLockConfiguration.Rule.DefaultRetention.Mode == "COMPLIANCE"
+   ' s3/object-lock-config.json
++ record_pass AU-9 'Object Lock is enabled in COMPLIANCE mode'
++ local control_id=AU-9
++ local 'message=Object Lock is enabled in COMPLIANCE mode'
++ pass AU-9
++ echo 'PASS: AU-9'
++ add_result AU-9 pass 'Object Lock is enabled in COMPLIANCE mode'
++ local control_id=AU-9
++ local status=pass
++ local 'message=Object Lock is enabled in COMPLIANCE mode'
++ jq --arg control_id AU-9 --arg status pass --arg message 'Object Lock is enabled in COMPLIANCE mode' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file s3/bucket-lifecycle.json
++ local file=s3/bucket-lifecycle.json
++ [[ ! -f s3/bucket-lifecycle.json ]]
++ jq . s3/bucket-lifecycle.json
++ return 0
++ jq -e '(.Rules // []) | length > 0' s3/bucket-lifecycle.json
++ record_pass AU-11 'S3 lifecycle retention policy exists'
++ local control_id=AU-11
++ local 'message=S3 lifecycle retention policy exists'
++ pass AU-11
++ echo 'PASS: AU-11'
++ add_result AU-11 pass 'S3 lifecycle retention policy exists'
++ local control_id=AU-11
++ local status=pass
++ local 'message=S3 lifecycle retention policy exists'
++ jq --arg control_id AU-11 --arg status pass --arg message 'S3 lifecycle retention policy exists' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file firehose/security-log-delivery.json
++ local file=firehose/security-log-delivery.json
++ [[ ! -f firehose/security-log-delivery.json ]]
++ jq . firehose/security-log-delivery.json
++ return 0
++ check_file cloudwatch/destination-policy.json
++ local file=cloudwatch/destination-policy.json
++ [[ ! -f cloudwatch/destination-policy.json ]]
++ jq . cloudwatch/destination-policy.json
++ return 0
++ jq -e '
+     .summary.stream_found == true and
+     (.summary.destination_count // 0) > 0 and
+     .validation.encryption_enabled == true
+   ' firehose/security-log-delivery.json
++ jq -e '
+     .summary.destination_found == true and
+     .validation.access_policy_present == true
+   ' cloudwatch/destination-policy.json
++ record_pass AU-12 'Firehose and CloudWatch Logs destination policy are configured'
++ local control_id=AU-12
++ local 'message=Firehose and CloudWatch Logs destination policy are configured'
++ pass AU-12
++ echo 'PASS: AU-12'
++ add_result AU-12 pass 'Firehose and CloudWatch Logs destination policy are configured'
++ local control_id=AU-12
++ local status=pass
++ local 'message=Firehose and CloudWatch Logs destination policy are configured'
++ jq --arg control_id AU-12 --arg status pass --arg message 'Firehose and CloudWatch Logs destination policy are configured' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file iam/logging-role-policy.json
++ local file=iam/logging-role-policy.json
++ [[ ! -f iam/logging-role-policy.json ]]
++ jq . iam/logging-role-policy.json
++ return 0
++ check_file iam/trust-policy.json
++ local file=iam/trust-policy.json
++ [[ ! -f iam/trust-policy.json ]]
++ jq . iam/trust-policy.json
++ return 0
++ record_pass AC-3 'IAM role policy and trust policy evidence exists'
++ local control_id=AC-3
++ local 'message=IAM role policy and trust policy evidence exists'
++ pass AC-3
++ echo 'PASS: AC-3'
++ add_result AC-3 pass 'IAM role policy and trust policy evidence exists'
++ local control_id=AC-3
++ local status=pass
++ local 'message=IAM role policy and trust policy evidence exists'
++ jq --arg control_id AC-3 --arg status pass --arg message 'IAM role policy and trust policy evidence exists' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file monitoring/config-rules.json
++ local file=monitoring/config-rules.json
++ [[ ! -f monitoring/config-rules.json ]]
++ jq . monitoring/config-rules.json
++ return 0
++ jq -e '.summary.config_rule_count > 0 and .validation.all_rules_active == true' monitoring/config-rules.json
++ record_pass CM-2/CM-6 'AWS Config rules exist and are active'
++ local control_id=CM-2/CM-6
++ local 'message=AWS Config rules exist and are active'
++ pass CM-2/CM-6
++ echo 'PASS: CM-2/CM-6'
++ add_result CM-2/CM-6 pass 'AWS Config rules exist and are active'
++ local control_id=CM-2/CM-6
++ local status=pass
++ local 'message=AWS Config rules exist and are active'
++ jq --arg control_id CM-2/CM-6 --arg status pass --arg message 'AWS Config rules exist and are active' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file guardduty/detector-config.json
++ local file=guardduty/detector-config.json
++ [[ ! -f guardduty/detector-config.json ]]
++ jq . guardduty/detector-config.json
++ return 0
++ check_file detective/graph-config.json
++ local file=detective/graph-config.json
++ [[ ! -f detective/graph-config.json ]]
++ jq . detective/graph-config.json
++ return 0
++ jq -e '.validation.detector_enabled == true' guardduty/detector-config.json
++ jq -e '.summary.graph_found == true and .validation.graph_arn_matches_expected == true' detective/graph-config.json
++ record_pass SI-4 'GuardDuty detector and Detective graph are present'
++ local control_id=SI-4
++ local 'message=GuardDuty detector and Detective graph are present'
++ pass SI-4
++ echo 'PASS: SI-4'
++ add_result SI-4 pass 'GuardDuty detector and Detective graph are present'
++ local control_id=SI-4
++ local status=pass
++ local 'message=GuardDuty detector and Detective graph are present'
++ jq --arg control_id SI-4 --arg status pass --arg message 'GuardDuty detector and Detective graph are present' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file cloudtrail/org-trail-config.json
++ local file=cloudtrail/org-trail-config.json
++ [[ ! -f cloudtrail/org-trail-config.json ]]
++ jq . cloudtrail/org-trail-config.json
++ return 0
++ check_file s3/object-lock-config.json
++ local file=s3/object-lock-config.json
++ [[ ! -f s3/object-lock-config.json ]]
++ jq . s3/object-lock-config.json
++ return 0
++ jq -e '.validation.log_file_validation_enabled == true' cloudtrail/org-trail-config.json
++ jq -e '.ObjectLockConfiguration.ObjectLockEnabled == "Enabled"' s3/object-lock-config.json
++ record_pass SI-7 'CloudTrail log validation and S3 Object Lock are enabled'
++ local control_id=SI-7
++ local 'message=CloudTrail log validation and S3 Object Lock are enabled'
++ pass SI-7
++ echo 'PASS: SI-7'
++ add_result SI-7 pass 'CloudTrail log validation and S3 Object Lock are enabled'
++ local control_id=SI-7
++ local status=pass
++ local 'message=CloudTrail log validation and S3 Object Lock are enabled'
++ jq --arg control_id SI-7 --arg status pass --arg message 'CloudTrail log validation and S3 Object Lock are enabled' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file kms/key-rotation-status.json
++ local file=kms/key-rotation-status.json
++ [[ ! -f kms/key-rotation-status.json ]]
++ jq . kms/key-rotation-status.json
++ return 0
++ jq -e '.KeyRotationEnabled == true' kms/key-rotation-status.json
++ record_pass SC-12 'KMS key rotation is enabled'
++ local control_id=SC-12
++ local 'message=KMS key rotation is enabled'
++ pass SC-12
++ echo 'PASS: SC-12'
++ add_result SC-12 pass 'KMS key rotation is enabled'
++ local control_id=SC-12
++ local status=pass
++ local 'message=KMS key rotation is enabled'
++ jq --arg control_id SC-12 --arg status pass --arg message 'KMS key rotation is enabled' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
++ check_file s3/bucket-encryption.json
++ local file=s3/bucket-encryption.json
++ [[ ! -f s3/bucket-encryption.json ]]
++ jq . s3/bucket-encryption.json
++ return 0
++ jq -e '
+     (.ServerSideEncryptionConfiguration.Rules // [])
+     | map(.ApplyServerSideEncryptionByDefault.SSEAlgorithm == "aws:kms")
+     | all
+   ' s3/bucket-encryption.json
++ record_pass SC-28 'S3 encryption is KMS-backed'
++ local control_id=SC-28
++ local 'message=S3 encryption is KMS-backed'
++ pass SC-28
++ echo 'PASS: SC-28'
++ add_result SC-28 pass 'S3 encryption is KMS-backed'
++ local control_id=SC-28
++ local status=pass
++ local 'message=S3 encryption is KMS-backed'
++ jq --arg control_id SC-28 --arg status pass --arg message 'S3 encryption is KMS-backed' '. + [{
+      control_id: $control_id,
+      status: $status,
+      message: $message
+    }]' /tmp/tmp.JJCShTdp6V
++ mv /tmp/tmp.JJCShTdp6V.new /tmp/tmp.JJCShTdp6V
+++ mktemp
++ REPORT_TMP=/tmp/tmp.bvoAdEZpBK
+++ jq length /tmp/tmp.JJCShTdp6V
++ total=13
+++ jq '[.[] | select(.status == "pass")] | length' /tmp/tmp.JJCShTdp6V
++ passed=13
+++ jq '[.[] | select(.status == "fail")] | length' /tmp/tmp.JJCShTdp6V
++ failed=0
+++ date -u +%Y-%m-%dT%H:%M:%SZ
++ generated_at=2026-05-01T15:35:14Z
++ jq --arg generated_at 2026-05-01T15:35:14Z --arg mode offline --arg evidence_basis 'captured evidence artifacts' --argjson total 13 --argjson passed 13 --argjson failed 0 --slurpfile results /tmp/tmp.JJCShTdp6V '{
+    validation_metadata: {
+      generated_at: $generated_at,
+      mode: $mode,
+      evidence_basis: $evidence_basis
+    },
+    summary: {
+      total_controls_checked: $total,
+      passed: $passed,
+      failed: $failed
+    },
+    results: $results[0]
+  }'

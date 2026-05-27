@@ -1,0 +1,116 @@
+{
+  "component-definition": {
+    "uuid": "d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f80",
+    "metadata": {
+      "title": "SpecifierOnline Platform Network Infrastructure — SC-8 Component Definition",
+      "last-modified": "2026-05-21T00:00:00Z",
+      "version": "1.0.0",
+      "oscal-version": "1.1.2",
+      "remarks": "Component definition for the platform account compute VPC network infrastructure. Documents SC-8 transmission confidentiality implementation including the S3 gateway endpoint routing nuance that requires auditor explanation."
+    },
+    "components": [
+      {
+        "uuid": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+        "type": "software",
+        "title": "Platform Compute VPC Network",
+        "description": "AWS VPC network infrastructure for the platform account compute VPC (10.1.0.0/16). Provides isolated network environment for ECS Fargate platform management tasks. All AWS API calls route through VPC interface and gateway endpoints — no internet egress path exists.",
+        "purpose": "Provides network isolation and controlled egress for platform ECS tasks. Enforces transmission confidentiality by routing all AWS API traffic through private VPC endpoints.",
+        "responsible-roles": [
+          {
+            "role-id": "maintainer",
+            "party-uuids": ["f0e1d2c3-b4a5-4968-7b6c-5d4e3f2a1b0c"]
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "e1f2a3b4-c5d6-4e7f-8a9b-0c1d2e3f4a5b",
+            "source": "https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final",
+            "description": "Implementation of SC-8 Transmission Confidentiality and Integrity controls for the platform compute VPC network infrastructure.",
+            "implemented-requirements": [
+              {
+                "uuid": "f2a3b4c5-d6e7-4f8a-9b0c-1d2e3f4a5b6c",
+                "control-id": "SC-8",
+                "description": "Transmission confidentiality is enforced for all data in transit from ECS Fargate tasks in the compute VPC through the following mechanisms:\n\n1. VPC interface endpoints for all AWS API calls (ECR, Secrets Manager, SSM, STS, CloudWatch Logs) — traffic travels on the AWS internal network and never reaches the public internet.\n\n2. S3 gateway endpoint (pl-63a5400a) for ECR image layer downloads — routes traffic to S3 public IP ranges but traffic is intercepted at the AWS hypervisor level before reaching the internet. Despite the public destination IP addresses, this traffic travels exclusively on the AWS internal network fabric. The compute VPC has no internet gateway, confirming no internet path exists.\n\n3. All S3 bucket policies enforce TLS via explicit deny on aws:SecureTransport=false.\n\n4. Aurora connections enforce TLS via rds.force_ssl parameter group setting.\n\nSee oscal/implementation-notes/SC-8-s3-gateway-endpoint-note.md for detailed auditor explanation of the S3 gateway endpoint routing behavior.",
+                "statements": [
+                  {
+                    "statement-id": "SC-8_smt",
+                    "uuid": "a3b4c5d6-e7f8-4a9b-0c1d-2e3f4a5b6c7d",
+                    "description": "The system implements cryptographic mechanisms to prevent unauthorized disclosure during transmission. All ECS task communications use TLS. S3 gateway endpoint traffic routes through the AWS internal network despite public destination IP addresses."
+                  }
+                ],
+                "by-components": [
+                  {
+                    "component-uuid": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+                    "uuid": "b4c5d6e7-f8a9-4b0c-1d2e-3f4a5b6c7d8e",
+                    "description": "The compute VPC implements the following SC-8 controls:\n\n- S3 gateway endpoint (aws_vpc_endpoint.compute_s3) routes ECR image layer downloads through AWS internal network\n- Security group rule (aws_security_group_rule.ecs_tasks_compute_egress_s3_gateway) allows TCP 443 to S3 prefix list pl-63a5400a\n- No internet gateway exists in the compute VPC — verified by absence of aws_internet_gateway resource in module.network for compute VPC\n- Route table (aws_route_table.compute_private) contains pl-63a5400a route targeting the gateway endpoint\n- All other AWS API calls use interface endpoints with private IPs in the compute VPC CIDR",
+                    "implementation-status": {
+                      "state": "implemented"
+                    },
+                    "links": [
+                      {
+                        "href": "oscal/implementation-notes/SC-8-s3-gateway-endpoint-note.md",
+                        "rel": "reference",
+                        "media-type": "text/markdown"
+                      },
+                      {
+                        "href": "architecture/platform/network-design.md",
+                        "rel": "reference",
+                        "media-type": "text/markdown"
+                      },
+                      {
+                        "href": "infrastructure/modules/network/main.tf",
+                        "rel": "reference",
+                        "media-type": "text/plain"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "c5d6e7f8-a9b0-4c1d-2e3f-4a5b6c7d8e9f",
+                "control-id": "SC-8.1",
+                "description": "Cryptographic protection is implemented for all transmission paths:\n\n1. Interface endpoint traffic: AWS VPC endpoint network interfaces use TLS 1.2+ for all communications with AWS service APIs.\n\n2. S3 gateway endpoint: Although traffic routes to public S3 IP ranges, the AWS hypervisor intercepts packets before internet egress. All S3 bucket policies additionally enforce TLS via aws:SecureTransport deny condition.\n\n3. Aurora: TLS enforced by rds.force_ssl=1 in the Aurora parameter group. Connections without TLS are rejected.\n\n4. ECS task communications: All service-to-service calls use HTTPS.",
+                "by-components": [
+                  {
+                    "component-uuid": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+                    "uuid": "d6e7f8a9-b0c1-4d2e-3f4a-5b6c7d8e9f0a",
+                    "description": "Cryptographic protection implemented via AWS-managed TLS on all VPC endpoint communications and explicit TLS enforcement policies on S3 buckets and Aurora connections.",
+                    "implementation-status": {
+                      "state": "implemented"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "e7f8a9b0-c1d2-4e3f-4a5b-6c7d8e9f0a1b",
+          "title": "SC-8 S3 Gateway Endpoint Implementation Note",
+          "description": "Detailed explanation of S3 gateway endpoint routing behavior for auditor review. Documents why traffic to public S3 IP ranges satisfies SC-8 transmission confidentiality requirements.",
+          "rlinks": [
+            {
+              "href": "oscal/implementation-notes/SC-8-s3-gateway-endpoint-note.md",
+              "media-type": "text/markdown"
+            }
+          ]
+        },
+        {
+          "uuid": "f8a9b0c1-d2e3-4f4a-5b6c-7d8e9f0a1b2c",
+          "title": "Platform Network Design",
+          "description": "Architecture documentation for platform account VPC design including compute VPC no-internet-egress rationale.",
+          "rlinks": [
+            {
+              "href": "architecture/platform/network-design.md",
+              "media-type": "text/markdown"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,570 @@
+{
+  "system-security-plan": {
+    "uuid": "7f2b6c10-3d4e-4a91-8b2f-6c7d8e9f0011",
+    "metadata": {
+      "title": "System Security Plan - Centralized Logging Architecture Working Draft",
+      "version": "0.9.1",
+      "oscal-version": "1.1.2",
+      "published": "2026-03-04T00:00:00Z",
+      "last-modified": "2026-03-09T00:00:00Z",
+      "roles": [
+        {
+          "id": "system-owner",
+          "title": "System Owner"
+        },
+        {
+          "id": "security-engineering",
+          "title": "Security Engineering"
+        },
+        {
+          "id": "platform-engineering",
+          "title": "Platform Engineering"
+        },
+        {
+          "id": "security-operations",
+          "title": "Security Operations"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "d0e1f2a3-b4c5-4d6e-8f90-1a2b3c4d5e60",
+          "type": "organization",
+          "name": "Repository Working Draft"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "system-owner",
+          "party-uuids": [
+            "d0e1f2a3-b4c5-4d6e-8f90-1a2b3c4d5e60"
+          ]
+        },
+        {
+          "role-id": "security-engineering",
+          "party-uuids": [
+            "d0e1f2a3-b4c5-4d6e-8f90-1a2b3c4d5e60"
+          ]
+        },
+        {
+          "role-id": "platform-engineering",
+          "party-uuids": [
+            "d0e1f2a3-b4c5-4d6e-8f90-1a2b3c4d5e60"
+          ]
+        },
+        {
+          "role-id": "security-operations",
+          "party-uuids": [
+            "d0e1f2a3-b4c5-4d6e-8f90-1a2b3c4d5e60"
+          ]
+        }
+      ],
+      "remarks": "This SSP is a working draft focused on the centralized logging architecture represented in this repository. It reflects the current repository structure. Human-readable architecture documentation is current under architecture/logging/. Current implementation materials consist of Terraform environment configurations under infrastructure/environments/ and reusable modules under infrastructure/modules/. Evidence artifacts are stored under evidence/. This file should be treated as SSP scaffolding rather than a final system-level SSP deliverable."
+    },
+    "import-profile": {
+      "href": "https://raw.githubusercontent.com/usnistgov/OSCAL/main/content/nist.gov/SP800-53/rev5/xml/NIST_SP-800-53_rev5_HIGH-baseline-resolved-profile_catalog.xml"
+    },
+    "system-characteristics": {
+      "system-ids": [
+        {
+          "identifier-type": "internal",
+          "id": "centralized-logging-working-draft"
+        }
+      ],
+      "system-name": "Centralized Logging Architecture",
+      "description": "Working-draft SSP content for a centralized AWS logging architecture that uses a dedicated Security account, immutable S3 storage with Object Lock Compliance mode, SSE-KMS encryption, CloudTrail, CloudWatch Logs, and Kinesis Data Firehose to collect, retain, and protect audit-relevant logs.",
+      "system-information": {
+        "information-types": [
+          {
+            "uuid": "1a9d90c0-1b2c-4d3e-8f40-5a6b7c8d9001",
+            "title": "Security Audit Logging Information",
+            "description": "Audit-relevant events and telemetry including AWS API activity, service access logs, web application firewall logs, and selected application logs required for monitoring, investigation, and compliance evidence."
+          }
+        ]
+      },
+      "security-sensitivity-level": "moderate",
+      "security-impact-level": {
+        "security-objective-confidentiality": "moderate",
+        "security-objective-integrity": "high",
+        "security-objective-availability": "moderate"
+      },
+      "status": {
+        "state": "under-development",
+        "remarks": "Repository-backed working draft. Architecture is documented. Example implementation artifacts exist. Reusable modules and full system-specific SSP content are still in development."
+      },
+      "authorization-boundary": {
+        "description": "The authorization boundary for this working draft includes the centralized logging capability implemented across workload accounts and a dedicated Security account. In-scope elements include CloudTrail configuration, CloudWatch Logs subscription paths where used, Kinesis Data Firehose delivery streams, the central S3 security log archive, KMS keys used for SSE-KMS encryption, monitoring for logging pipeline failures, and operational procedures for logging failure response. Broader application and infrastructure components are outside the scope of this draft unless they directly participate in log generation or delivery."
+      },
+      "network-architecture": {
+        "description": "Logging data flows from workload accounts and perimeter services into a dedicated Security account. Direct-delivery services such as CloudTrail, ALB/NLB logging, and CloudFront logging write to the central archive where configured. CloudWatch-based sources such as WAF logs, selected application logs, VPC Flow Logs, and Resolver query logs are delivered through subscription filters and Kinesis Data Firehose to the central archive. Access to stored logs is restricted to approved roles."
+      },
+      "data-flow": {
+        "description": "Primary flows include AWS service logs delivered directly to S3 and CloudWatch Logs-based sources forwarded via Firehose. Logs are encrypted at rest using SSE-KMS, retained using Object Lock Compliance mode, and monitored for delivery or configuration failure."
+      }
+    },
+    "system-implementation": {
+      "users": [
+        {
+          "uuid": "9f8e7d6c-5b4a-4c3d-8e2f-1a0b9c8d7001",
+          "title": "Security Operations Analyst",
+          "short-name": "soc-analyst",
+          "description": "Reviews alerts, validates log delivery health, and uses approved tools to investigate audit events.",
+          "role-ids": [
+            "security-operations"
+          ]
+        },
+        {
+          "uuid": "8e7d6c5b-4a3f-4d2e-9c1b-0a9f8e7d6002",
+          "title": "Security Engineer",
+          "short-name": "security-engineer",
+          "description": "Defines archive protection settings, access restrictions, KMS policies, and monitoring requirements for the centralized logging architecture.",
+          "role-ids": [
+            "security-engineering"
+          ]
+        },
+        {
+          "uuid": "7d6c5b4a-3f2e-4c1d-8b0a-9f8e7d6c5003",
+          "title": "Platform Engineer",
+          "short-name": "platform-engineer",
+          "description": "Implements and maintains log generation and delivery paths for AWS services and application telemetry.",
+          "role-ids": [
+            "platform-engineering"
+          ]
+        }
+      ],
+      "components": [
+        {
+          "uuid": "b0f3a3a6-5d9a-4f47-9c6e-2a45d03d0f91",
+          "type": "service",
+          "title": "Centralized Security Logging Architecture",
+          "description": "Centralized immutable logging capability implemented across AWS accounts with cross-account log delivery, Object Lock, SSE-KMS, and monitoring for delivery and configuration failures.",
+          "status": {
+            "state": "operational"
+          },
+          "props": [
+            {
+              "name": "implementation-status",
+              "value": "documentation-current-partial-implementation"
+            },
+            {
+              "name": "planned-artifact",
+              "value": "infrastructure/modules/"
+            }
+          ],
+          "links": [
+            {
+              "rel": "reference",
+              "href": "architecture/logging/overview.md",
+              "text": "Logging architecture overview"
+            },
+            {
+              "rel": "reference",
+              "href": "architecture/logging/narrative.md",
+              "text": "Logging architecture narrative"
+            },
+            {
+              "rel": "reference",
+              "href": "architecture/logging/log-flow-table.md",
+              "text": "Log flow table"
+            },
+            {
+              "rel": "diagram",
+              "href": "diagrams/logging-architecture.md",
+              "text": "Merged logging architecture diagram"
+            },
+            {
+              "rel": "reference",
+              "href": "architecture/logging/threat-model.md",
+              "text": "Logging threat model"
+            },
+            {
+              "rel": "reference",
+              "href": "infrastructure/environments/security/",
+              "text": "Security environment Terraform configuration"
+            },
+            {
+              "rel": "reference",
+              "href": "infrastructure/environments/platform/",
+              "text": "Platform environment Terraform configuration"
+            }
+            {
+              "rel": "reference",
+              "href": "infrastructure/modules/",
+              "text": "Reusable Terraform modules and policy definitions"
+            },
+            {
+              "rel": "reference",
+              "href": "procedures/logging-failure-playbook.md",
+              "text": "Logging failure response playbook"
+            }
+          ],
+          "remarks": "Current implementation materials live under infrastructure/environments/security/, infrastructure/environments/platform/, and infrastructure/modules/. Terraform modules and environment configurations are the canonical implementation source. Evidence exports under evidence/ provide collected runtime configuration artifacts."
+        }
+      ],
+      "inventory-items": [
+        {
+          "uuid": "44c0f3b1-9c2d-4a8f-b7e0-1d2c3b4a5001",
+          "description": "Central S3 security log archive bucket with Object Lock Compliance mode, versioning, and SSE-KMS."
+        },
+        {
+          "uuid": "55d1e4c2-0b3a-4c9d-a8f1-2e3d4c5b6002",
+          "description": "KMS key used for log archive encryption and access control."
+        },
+        {
+          "uuid": "66e2f5d3-1c4b-4dae-b9f2-3f4e5d6c7003",
+          "description": "CloudTrail trail configuration for AWS API activity logging."
+        },
+        {
+          "uuid": "77f306e4-2d5c-4ebf-caf3-4a5f6e7d8004",
+          "description": "CloudWatch Logs and Firehose delivery paths for CloudWatch-based log sources."
+        },
+        {
+          "uuid": "880417f5-3e6d-4fc0-dbf4-5b6a7f8e9005",
+          "description": "Monitoring and alerting for logging pipeline failures and suspicious configuration changes."
+        }
+      ]
+    },
+    "control-implementation": {
+      "description": "Control implementation content for the centralized logging working draft. This section focuses on controls materially supported by the centralized logging architecture and references current repository artifacts and evidence outputs.",
+      "implemented-requirements": [
+        {
+          "uuid": "ac6fb6ce-43b7-4d68-9b66-39f87f0c2c11",
+          "control-id": "AU-2",
+          "statements": [
+            {
+              "statement-id": "ac6fb6ce-43b7-4d68-9b66-39f87f0c2c11_smt.a",
+              "description": "Audit events are defined and captured using AWS CloudTrail, service access logs, WAF logs, and selected application logs. Current architecture references are maintained in architecture/logging/."
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "b0f3a3a6-5d9a-4f47-9c6e-2a45d03d0f91",
+              "description": "Centralized logging component captures AWS API events, perimeter logs, and selected application telemetry through direct S3 delivery and CloudWatch-to-Firehose delivery paths."
+            }
+          ]
+        },
+        {
+          "uuid": "9c2e8d2e-3c8a-4d07-9ad1-f9a0b5b1b8a9",
+          "control-id": "AU-5",
+          "statements": [
+            {
+              "statement-id": "9c2e8d2e-3c8a-4d07-9ad1-f9a0b5b1b8a9_smt.a",
+              "description": "Monitoring is configured to detect CloudTrail disablement, Firehose delivery failures, and suspicious changes to bucket or KMS configuration. Operational response is defined in procedures/logging-failure-playbook.md."
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "b0f3a3a6-5d9a-4f47-9c6e-2a45d03d0f91",
+              "description": "Monitoring and response procedures support detection and handling of audit processing failures.",
+              "links": [
+                {
+                  "href": "procedures/logging-failure-playbook.md",
+                  "rel": "reference"
+                },
+                {
+                  "href": "evidence/monitoring/cloudwatch-alarms.json",
+                  "rel": "evidence"
+                },
+                {
+                  "href": "evidence/monitoring/config-rules.json",
+                  "rel": "evidence"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "b6c3e2b0-71d3-4e6f-9a3d-bf02e1e5a1f2",
+          "control-id": "AU-9",
+          "statements": [
+            {
+              "statement-id": "b6c3e2b0-71d3-4e6f-9a3d-bf02e1e5a1f2_smt.a",
+              "description": "Audit information is protected through cross-account storage in a dedicated Security account, S3 Object Lock Compliance mode, versioning, and restrictive bucket policies that enforce TLS and SSE-KMS."
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "b0f3a3a6-5d9a-4f47-9c6e-2a45d03d0f91",
+              "description": "Central archive protections prevent unauthorized modification and deletion during retention.",
+              "links": [
+                {
+                  "href": "evidence/s3/central-security-logs-policy.json",
+                  "rel": "evidence"
+                },
+                {
+                  "href": "evidence/s3/object-lock-config.json",
+                  "rel": "evidence"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "0a86efc2-5ed7-42d6-a730-8888b0c4c9df",
+          "control-id": "AU-11",
+          "statements": [
+            {
+              "statement-id": "0a86efc2-5ed7-42d6-a730-8888b0c4c9df_smt.a",
+              "description": "Audit records are retained using Object Lock Compliance mode and related lifecycle settings. Current evidence collection targets these settings under evidence/s3/."
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "b0f3a3a6-5d9a-4f47-9c6e-2a45d03d0f91",
+              "description": "Retention is enforced by archive configuration rather than application-level controls.",
+              "links": [
+                {
+                  "href": "evidence/s3/object-lock-config.json",
+                  "rel": "evidence"
+                },
+                {
+                  "href": "evidence/s3/bucket-lifecycle.json",
+                  "rel": "evidence"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "2c3b4a5d-6e7f-4a8b-9c0d-1e2f3a4b5c6d",
+          "control-id": "AC-6",
+          "statements": [
+            {
+              "statement-id": "2c3b4a5d-6e7f-4a8b-9c0d-1e2f3a4b5c6d_smt.a",
+              "description": "Least privilege is enforced by restricting KMS usage and S3 read/write access to approved principals and roles only."
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "b0f3a3a6-5d9a-4f47-9c6e-2a45d03d0f91",
+              "description": "KMS and S3 controls limit who can deliver, decrypt, and review log data.",
+              "links": [
+                {
+                  "href": "evidence/kms/security-log-key-policy.json",
+                  "rel": "evidence"
+                },
+                {
+                  "href": "evidence/s3/central-security-logs-policy.json",
+                  "rel": "evidence"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "c3d2e1f0-a9b8-47c6-8d9e-0f1a2b3c4d5e",
+          "control-id": "SC-13",
+          "statements": [
+            {
+              "statement-id": "c3d2e1f0-a9b8-47c6-8d9e-0f1a2b3c4d5e_smt.a",
+              "description": "Cryptographic protection is enforced through TLS requirements and SSE-KMS encryption of the central archive."
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "b0f3a3a6-5d9a-4f47-9c6e-2a45d03d0f91",
+              "description": "Archive policy and encryption settings enforce transport and storage protections.",
+              "links": [
+                {
+                  "href": "evidence/s3/bucket-encryption.json",
+                  "rel": "evidence"
+                },
+                {
+                  "href": "evidence/s3/central-security-logs-policy.json",
+                  "rel": "evidence"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "e5f6a7b8-c9d0-4e1f-8a2b-3c4d5e6f7081",
+          "control-id": "SI-4",
+          "statements": [
+            {
+              "statement-id": "e5f6a7b8-c9d0-4e1f-8a2b-3c4d5e6f7081_smt.a",
+              "description": "System monitoring detects logging failures and suspicious changes to central archive configuration using alarms and configuration monitoring."
+            }
+          ],
+          "by-components": [
+            {
+              "component-uuid": "b0f3a3a6-5d9a-4f47-9c6e-2a45d03d0f91",
+              "description": "Monitoring covers CloudTrail status, Firehose delivery health, and selected configuration drift conditions.",
+              "links": [
+                {
+                  "href": "evidence/monitoring/cloudwatch-alarms.json",
+                  "rel": "evidence"
+                },
+                {
+                  "href": "evidence/monitoring/config-rules.json",
+                  "rel": "evidence"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "7d0b6c59-3c44-4d7d-84d3-4cc7b7e5a201",
+          "title": "Logging Architecture Overview",
+          "rlinks": [
+            {
+              "href": "architecture/logging/overview.md",
+              "media-type": "text/markdown"
+            }
+          ]
+        },
+        {
+          "uuid": "8f3d7e4a-28aa-4d44-aeb1-4f95d9b8d202",
+          "title": "Logging Architecture Narrative",
+          "rlinks": [
+            {
+              "href": "architecture/logging/narrative.md",
+              "media-type": "text/markdown"
+            }
+          ]
+        },
+        {
+          "uuid": "32db4f7d-1bd1-43d5-b33a-5fa6f39b3203",
+          "title": "Log Flow Table",
+          "rlinks": [
+            {
+              "href": "architecture/logging/log-flow-table.md",
+              "media-type": "text/markdown"
+            }
+          ]
+        },
+        {
+          "uuid": "4c8b0c7d-6e5f-4a91-8b22-7d6c5b4a3004",
+          "title": "Logging Threat Model",
+          "rlinks": [
+            {
+              "href": "architecture/logging/threat-model.md",
+              "media-type": "text/markdown"
+            }
+          ]
+        },
+        {
+          "uuid": "9d8e0c21-1f0a-4ccf-a0c6-bd5a6fa1f915",
+          "title": "Logging Failure Response Playbook",
+          "rlinks": [
+            {
+              "href": "procedures/logging-failure-playbook.md",
+              "media-type": "text/markdown"
+            }
+          ]
+        },
+        {
+          "uuid": "0f8f7b2b-4f14-4a2e-8b5b-8f4f2c1d9a01",
+          "title": "S3 Bucket Policy (Central Security Logs)",
+          "rlinks": [
+            {
+              "href": "evidence/s3/central-security-logs-policy.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "93d14f6a-7a52-43bf-90c0-2f4de4c9c0a2",
+          "title": "S3 Object Lock Configuration",
+          "rlinks": [
+            {
+              "href": "evidence/s3/object-lock-config.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "f6a4f0a7-0a9b-4c11-9b0b-11b2d5c8f301",
+          "title": "S3 Bucket Encryption Configuration",
+          "rlinks": [
+            {
+              "href": "evidence/s3/bucket-encryption.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "a5c3f2d0-2d4a-4fbe-9a6a-9b65b9f2a411",
+          "title": "KMS Key Policy (Security Log Key)",
+          "rlinks": [
+            {
+              "href": "evidence/kms/security-log-key-policy.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "c8d7f6b1-0c9f-4f0f-8e8f-9b3d8e7f1c20",
+          "title": "CloudTrail Configuration Export",
+          "rlinks": [
+            {
+              "href": "evidence/cloudtrail/org-trail-config.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "cbe2a911-8d4a-4e3a-a2f7-126a9f0f6c12",
+          "title": "Firehose Delivery Stream Configuration",
+          "rlinks": [
+            {
+              "href": "evidence/firehose/security-log-delivery.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "2c1c3bb5-3e5a-46f1-bb9a-4b9a5c4e7001",
+          "title": "Monitoring and Alerts Evidence",
+          "rlinks": [
+            {
+              "href": "evidence/monitoring/cloudwatch-alarms.json",
+              "media-type": "application/json"
+            },
+            {
+              "href": "evidence/monitoring/config-rules.json",
+              "media-type": "application/json"
+            }
+          ]
+        },
+        {
+          "uuid": "b1e2c3d4-f5a6-4b7c-8d9e-0a1b2c3d4e5f",
+          "title": "Current Terraform Environment and Module Artifacts",
+          "remarks": "Current Terraform implementation artifacts exist under infrastructure/environments/security/, infrastructure/environments/platform/, and infrastructure/modules/.",
+          "rlinks": [
+            {
+              "href": "infrastructure/environments/security/",
+              "media-type": "text/plain"
+            },
+            {
+              "href": "infrastructure/environments/platform/",
+              "media-type": "text/plain"
+            },
+            {
+              "href": "infrastructure/modules/",
+              "media-type": "text/plain"
+            }
+          ]
+        },
+        {
+          "uuid": "c2d3e4f5-a6b7-4c8d-9e0f-1a2b3c4d5e6f",
+          "title": "Current Policy Definitions and Evidence Artifacts",
+          "remarks": "Current policy definitions are embedded in Terraform modules under infrastructure/modules/. Collected JSON evidence artifacts are stored under evidence/."
+          "rlinks": [
+            {
+              "href": "infrastructure/modules/",
+              "media-type": "text/plain"
+            },
+            {
+              "href": "evidence/",
+              "media-type": "text/plain"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
++ set -euo pipefail
++++ dirname ./collect-logging-evidence.sh
+++ cd .
+++ pwd
++ ROOT_DIR=/home/mark/spo-infra/evidence
++ EVIDENCE_DIR=/home/mark/spo-infra/evidence
++ AWS_REGION=us-east-1
++ ALLOW_OVERWRITE=false
++ CLOUDTRAIL_AWS_PROFILE=
++ SECURITY_LOG_BUCKET=central-security-log-archive-725644097230-us-east-1
++ SECURITY_LOG_KEY_ALIAS=alias/security-log-key
++ ORG_TRAIL_NAME=enterprise-organization-trail-security
++ DELIVERY_STREAM_SECURITY=security-log-delivery
++ FIREHOSE_DELIVERY_ROLE_NAME=security-log-delivery-firehose-delivery-role
++ FIREHOSE_DELIVERY_POLICY_NAME=security-log-delivery-firehose-delivery-policy
++ CLOUDWATCH_TO_FIREHOSE_ROLE_NAME=security-log-delivery-cloudwatch-to-firehose-role
++ CLOUDWATCH_TO_FIREHOSE_POLICY_NAME=security-log-delivery-cloudwatch-to-firehose-policy
++ CLOUDWATCH_LOGS_DESTINATION_ARN=arn:aws:logs:us-east-1:725644097230:destination:central-security-log-destination
++ CLOUDWATCH_LOGS_DESTINATION_NAME=central-security-log-destination
++ VPC_FLOW_LOG_IDS_JSON='{}'
++ VPC_FLOW_LOG_DESTINATION=arn:aws:s3:::central-security-log-archive-725644097230-us-east-1/vpc-flow-logs/752575507725/
++ ROUTE53_QUERY_LOG_CONFIG_ID=rqlc-5837eabfc9024d8a
++ ROUTE53_QUERY_LOG_DESTINATION=
++ NLB_ARNS_JSON='[]'
++ WAF_WEB_ACL_ARNS_JSON='[]'
++ CLOUDFRONT_DISTRIBUTION_IDS_JSON='[]'
++ EXPECTED_CLOUDWATCH_ALARM_NAMES_JSON=
++ EXPECTED_CONFIG_RULE_NAMES_JSON=
++ EXPECTED_FIREHOSE_STREAM_NAME=
++ EXPECTED_CLOUDTRAIL_NAME=
++ EXPECTED_CLOUDTRAIL_S3_KEY_PREFIX=
++ EXPECTED_FIREHOSE_S3_PREFIX=
++ EXPECTED_NLB_LOG_BUCKET_NAME=
++ EXPECTED_NLB_LOG_PREFIX=
++ EXPECTED_WAF_LOG_DESTINATION_ARN=
++ EXPECTED_CLOUDFRONT_LOG_BUCKET_DOMAIN_NAME=
++ GUARDDUTY_DETECTOR_ID=5b6add3f5d3a4c8cbd339a7b84ac934f
++ DETECTIVE_GRAPH_ARN=arn:aws:detective:us-east-1:725644097230:graph:f1a97d8b905b426aa2482372bb44538b
++ METRIC_LOOKBACK_HOURS=24
++ main
++ require_cmd aws
++ command -v aws
++ require_cmd jq
++ command -v jq
++ log 'Starting evidence collection'
++ printf '%s\n' 'Starting evidence collection'
++ log 'Using evidence directory: /home/mark/spo-infra/evidence'
++ printf '%s\n' 'Using evidence directory: /home/mark/spo-infra/evidence'
++ log 'Using AWS region: us-east-1'
++ printf '%s\n' 'Using AWS region: us-east-1'
++ collect_cloudtrail
++ ensure_dir /home/mark/spo-infra/evidence/cloudtrail
++ mkdir -p /home/mark/spo-infra/evidence/cloudtrail
++ [[ -z enterprise-organization-trail-security ]]
++ local trails_json event_selectors_json trail_status_json
+++ aws --profile '' cloudtrail describe-trails --trail-name-list enterprise-organization-trail-security --region us-east-1
+
+aws: [ERROR]: An error occurred (NoCredentials): Unable to locate credentials. You can configure credentials by running "aws login".
++ trails_json=

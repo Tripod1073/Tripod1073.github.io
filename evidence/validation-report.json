@@ -1,0 +1,113 @@
+{
+  "validation_metadata": {
+    "generated_at": "2026-05-11T18:34:51Z",
+    "mode": "offline",
+    "evidence_basis": "captured evidence artifacts"
+  },
+  "summary": {
+    "total_controls_checked": 16,
+    "passed": 15,
+    "failed": 1,
+    "critical_failures": 0,
+    "high_failures": 1,
+    "medium_failures": 0
+  },
+  "results": [
+    {
+      "control_id": "STALE",
+      "status": "pass",
+      "severity": "none",
+      "message": "Validation report is recent (0 days old)"
+    },
+    {
+      "control_id": "INTEGRITY",
+      "status": "pass",
+      "severity": "none",
+      "message": "Captured evidence files match recorded SHA-256 hashes"
+    },
+    {
+      "control_id": "AU-2",
+      "status": "pass",
+      "severity": "none",
+      "message": "CloudTrail organization trail and event selectors are present"
+    },
+    {
+      "control_id": "AU-3",
+      "status": "pass",
+      "severity": "none",
+      "message": "CloudTrail captures management events"
+    },
+    {
+      "control_id": "AU-6",
+      "status": "pass",
+      "severity": "none",
+      "message": "Monitoring includes required audit and delivery alarms with actions"
+    },
+    {
+      "control_id": "AU-6-STATE",
+      "status": "fail",
+      "severity": "high",
+      "message": "One or more critical security alarms are in ALARM state"
+    },
+    {
+      "control_id": "AU-8",
+      "status": "pass",
+      "severity": "none",
+      "message": "CloudTrail is configured as multi-region"
+    },
+    {
+      "control_id": "AU-9",
+      "status": "pass",
+      "severity": "none",
+      "message": "Object Lock is in COMPLIANCE mode with retention and versioning enabled"
+    },
+    {
+      "control_id": "AU-11",
+      "status": "pass",
+      "severity": "none",
+      "message": "S3 lifecycle retention policy exists"
+    },
+    {
+      "control_id": "AU-12",
+      "status": "pass",
+      "severity": "none",
+      "message": "Firehose and CloudWatch Logs destination policy are configured"
+    },
+    {
+      "control_id": "AC-3",
+      "status": "pass",
+      "severity": "none",
+      "message": "IAM policies and trust policies enforce expected log-delivery access"
+    },
+    {
+      "control_id": "CM-2/CM-6",
+      "status": "pass",
+      "severity": "none",
+      "message": "AWS Config rules exist and are active"
+    },
+    {
+      "control_id": "SI-4",
+      "status": "pass",
+      "severity": "none",
+      "message": "GuardDuty protections and Detective graph are enabled"
+    },
+    {
+      "control_id": "SI-7",
+      "status": "pass",
+      "severity": "none",
+      "message": "CloudTrail log validation and S3 Object Lock are enabled"
+    },
+    {
+      "control_id": "SC-12",
+      "status": "pass",
+      "severity": "none",
+      "message": "KMS key rotation is enabled"
+    },
+    {
+      "control_id": "SC-28",
+      "status": "pass",
+      "severity": "none",
+      "message": "S3 encryption is KMS-backed"
+    }
+  ]
+}

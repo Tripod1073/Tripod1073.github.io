@@ -1,0 +1,71 @@
+{
+    "DeliveryStreamDescription": {
+        "DeliveryStreamName": "security-log-delivery",
+        "DeliveryStreamARN": "arn:aws:firehose:us-east-1:725644097230:deliverystream/security-log-delivery",
+        "DeliveryStreamStatus": "ACTIVE",
+        "DeliveryStreamEncryptionConfiguration": {
+            "Status": "DISABLED"
+        },
+        "DeliveryStreamType": "DirectPut",
+        "VersionId": "1",
+        "CreateTimestamp": "2026-05-11T09:23:01.809000-04:00",
+        "Destinations": [
+            {
+                "DestinationId": "destinationId-000000000001",
+                "S3DestinationDescription": {
+                    "RoleARN": "arn:aws:iam::725644097230:role/security-log-delivery-firehose-delivery-role",
+                    "BucketARN": "arn:aws:s3:::central-security-log-archive-725644097230-us-east-1",
+                    "Prefix": "firehose/752575507725/",
+                    "ErrorOutputPrefix": "firehose/752575507725/errors/",
+                    "BufferingHints": {
+                        "SizeInMBs": 128,
+                        "IntervalInSeconds": 300
+                    },
+                    "CompressionFormat": "GZIP",
+                    "EncryptionConfiguration": {
+                        "KMSEncryptionConfig": {
+                            "AWSKMSKeyARN": "arn:aws:kms:us-east-1:725644097230:key/65633ecd-2eb0-4301-aaa1-3696409cbbc2"
+                        }
+                    },
+                    "CloudWatchLoggingOptions": {
+                        "Enabled": true,
+                        "LogGroupName": "/aws/firehose/security-log-delivery",
+                        "LogStreamName": "delivery"
+                    }
+                },
+                "ExtendedS3DestinationDescription": {
+                    "RoleARN": "arn:aws:iam::725644097230:role/security-log-delivery-firehose-delivery-role",
+                    "BucketARN": "arn:aws:s3:::central-security-log-archive-725644097230-us-east-1",
+                    "Prefix": "firehose/752575507725/",
+                    "ErrorOutputPrefix": "firehose/752575507725/errors/",
+                    "BufferingHints": {
+                        "SizeInMBs": 128,
+                        "IntervalInSeconds": 300
+                    },
+                    "CompressionFormat": "GZIP",
+                    "EncryptionConfiguration": {
+                        "KMSEncryptionConfig": {
+                            "AWSKMSKeyARN": "arn:aws:kms:us-east-1:725644097230:key/65633ecd-2eb0-4301-aaa1-3696409cbbc2"
+                        }
+                    },
+                    "CloudWatchLoggingOptions": {
+                        "Enabled": true,
+                        "LogGroupName": "/aws/firehose/security-log-delivery",
+                        "LogStreamName": "delivery"
+                    },
+                    "ProcessingConfiguration": {
+                        "Enabled": false,
+                        "Processors": []
+                    },
+                    "S3BackupMode": "Disabled",
+                    "DataFormatConversionConfiguration": {
+                        "Enabled": false
+                    },
+                    "FileExtension": "",
+                    "CustomTimeZone": "UTC"
+                }
+            }
+        ],
+        "HasMoreDestinations": false
+    }
+}

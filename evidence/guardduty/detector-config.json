@@ -1,0 +1,176 @@
+{
+  "evidence_metadata": {
+    "artifact": "guardduty/detector-config.json",
+    "collector_function": "collect_guardduty",
+    "region": null
+  },
+  "summary": {
+    "detector_found": true,
+    "member_count": 0
+  },
+  "expected": {
+    "detector_id": "d6299d21aea9440b9d130c627379fa57"
+  },
+  "actual": {
+    "status": "ENABLED",
+    "finding_publishing_frequency": "FIFTEEN_MINUTES",
+    "service_role": "arn:aws:iam::725644097230:role/aws-service-role/guardduty.amazonaws.com/AWSServiceRoleForAmazonGuardDuty",
+    "data_sources": {
+      "CloudTrail": {
+        "Status": "ENABLED"
+      },
+      "DNSLogs": {
+        "Status": "ENABLED"
+      },
+      "FlowLogs": {
+        "Status": "ENABLED"
+      },
+      "S3Logs": {
+        "Status": "ENABLED"
+      },
+      "Kubernetes": {
+        "AuditLogs": {
+          "Status": "DISABLED"
+        }
+      },
+      "MalwareProtection": {
+        "ScanEc2InstanceWithFindings": {
+          "EbsVolumes": {
+            "Status": "ENABLED"
+          }
+        },
+        "ServiceRole": "arn:aws:iam::725644097230:role/aws-service-role/malware-protection.guardduty.amazonaws.com/AWSServiceRoleForAmazonGuardDutyMalwareProtection"
+      }
+    }
+  },
+  "validation": {
+    "detector_enabled": true,
+    "s3_protection_enabled": true,
+    "malware_protection_enabled": true,
+    "finding_frequency_is_fifteen_minutes": true,
+    "member_accounts": []
+  },
+  "raw": {
+    "get_detector": {
+      "CreatedAt": "2026-05-11T13:21:32.699Z",
+      "FindingPublishingFrequency": "FIFTEEN_MINUTES",
+      "ServiceRole": "arn:aws:iam::725644097230:role/aws-service-role/guardduty.amazonaws.com/AWSServiceRoleForAmazonGuardDuty",
+      "Status": "ENABLED",
+      "UpdatedAt": "2026-05-11T13:21:32.699Z",
+      "DataSources": {
+        "CloudTrail": {
+          "Status": "ENABLED"
+        },
+        "DNSLogs": {
+          "Status": "ENABLED"
+        },
+        "FlowLogs": {
+          "Status": "ENABLED"
+        },
+        "S3Logs": {
+          "Status": "ENABLED"
+        },
+        "Kubernetes": {
+          "AuditLogs": {
+            "Status": "DISABLED"
+          }
+        },
+        "MalwareProtection": {
+          "ScanEc2InstanceWithFindings": {
+            "EbsVolumes": {
+              "Status": "ENABLED"
+            }
+          },
+          "ServiceRole": "arn:aws:iam::725644097230:role/aws-service-role/malware-protection.guardduty.amazonaws.com/AWSServiceRoleForAmazonGuardDutyMalwareProtection"
+        }
+      },
+      "Tags": {
+        "Project": "centralized-logging",
+        "Environment": "security",
+        "EvidenceSet": "centralized-logging",
+        "Purpose": "Threat detection for centralized security account",
+        "ManagedBy": "terraform",
+        "Name": "GuardDuty Security Account Detector"
+      },
+      "Features": [
+        {
+          "Name": "CLOUD_TRAIL",
+          "Status": "ENABLED",
+          "UpdatedAt": "2026-05-11T11:07:02-04:00"
+        },
+        {
+          "Name": "DNS_LOGS",
+          "Status": "ENABLED",
+          "UpdatedAt": "2026-05-11T11:07:02-04:00"
+        },
+        {
+          "Name": "FLOW_LOGS",
+          "Status": "ENABLED",
+          "UpdatedAt": "2026-05-11T11:07:02-04:00"
+        },
+        {
+          "Name": "S3_DATA_EVENTS",
+          "Status": "ENABLED",
+          "UpdatedAt": "2026-05-11T09:21:32-04:00"
+        },
+        {
+          "Name": "EKS_AUDIT_LOGS",
+          "Status": "DISABLED",
+          "UpdatedAt": "2026-05-11T09:21:32-04:00"
+        },
+        {
+          "Name": "EBS_MALWARE_PROTECTION",
+          "Status": "ENABLED",
+          "UpdatedAt": "2026-05-11T09:21:32-04:00"
+        },
+        {
+          "Name": "RDS_LOGIN_EVENTS",
+          "Status": "ENABLED",
+          "UpdatedAt": "2026-05-11T09:21:32-04:00"
+        },
+        {
+          "Name": "EKS_RUNTIME_MONITORING",
+          "Status": "DISABLED",
+          "UpdatedAt": "2026-05-11T09:21:32-04:00",
+          "AdditionalConfiguration": [
+            {
+              "Name": "EKS_ADDON_MANAGEMENT",
+              "Status": "DISABLED",
+              "UpdatedAt": "2026-05-11T09:21:32-04:00"
+            }
+          ]
+        },
+        {
+          "Name": "LAMBDA_NETWORK_LOGS",
+          "Status": "DISABLED",
+          "UpdatedAt": "2026-05-11T09:21:32-04:00"
+        },
+        {
+          "Name": "RUNTIME_MONITORING",
+          "Status": "DISABLED",
+          "UpdatedAt": "2026-05-11T09:21:32-04:00",
+          "AdditionalConfiguration": [
+            {
+              "Name": "EKS_ADDON_MANAGEMENT",
+              "Status": "DISABLED",
+              "UpdatedAt": "2026-05-11T09:21:32-04:00"
+            },
+            {
+              "Name": "ECS_FARGATE_AGENT_MANAGEMENT",
+              "Status": "DISABLED",
+              "UpdatedAt": "2026-05-11T09:21:32-04:00"
+            },
+            {
+              "Name": "EC2_AGENT_MANAGEMENT",
+              "Status": "DISABLED",
+              "UpdatedAt": "2026-05-11T09:21:32-04:00"
+            }
+          ]
+        }
+      ]
+    },
+    "list_members": {
+      "Members": []
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "evidence_metadata": {
+    "artifact": "vpc/flow-log-config.json"
+  },
+  "summary": {
+    "configured_flow_log_count": 0
+  }
+}

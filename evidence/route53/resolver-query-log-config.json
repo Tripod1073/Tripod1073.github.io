@@ -1,0 +1,36 @@
+{
+  "evidence_metadata": {
+    "artifact": "route53/resolver-query-log-config.json",
+    "collector_function": "collect_route53",
+    "region": null
+  },
+  "summary": {
+    "config_found": true,
+    "association_count": 0
+  },
+  "expected": {
+    "resolver_query_log_config_id": "rqlc-c7ac50a67cbd4a06",
+    "destination_arn": null
+  },
+  "actual": {
+    "resolver_query_log_config": {
+      "Id": "rqlc-c7ac50a67cbd4a06",
+      "OwnerId": "725644097230",
+      "Status": "CREATED",
+      "ShareStatus": "SHARED_BY_ME",
+      "AssociationCount": 0,
+      "Arn": "arn:aws:route53resolver:us-east-1:725644097230:resolver-query-log-config/rqlc-c7ac50a67cbd4a06",
+      "Name": "resolver-query-logs-752575507725",
+      "DestinationArn": "arn:aws:s3:::central-security-log-archive-725644097230-us-east-1/route53-query-logs/752575507725/",
+      "CreatorRequestId": "tf-r53-resolver-query-log-config-20260511133052748400000001",
+      "CreationTime": "2026-05-11T13:30:53.047275903Z"
+    },
+    "destination_arn": "arn:aws:s3:::central-security-log-archive-725644097230-us-east-1/route53-query-logs/752575507725/",
+    "associated_vpcs": []
+  },
+  "validation": {
+    "config_id_matches_expected": true,
+    "destination_matches_expected": null,
+    "has_vpc_associations": false
+  }
+}

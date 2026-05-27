@@ -1,0 +1,8 @@
+{
+  "evidence_metadata": {
+    "artifact": "waf/waf-logging-config.json"
+  },
+  "summary": {
+    "configured_web_acl_count": 0
+  }
+}

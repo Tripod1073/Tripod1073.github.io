@@ -1,0 +1,22 @@
+{
+  "evidence_metadata": {
+    "artifact": "nlb/nlb-access-log-config.json",
+    "collector_function": "collect_nlb",
+    "region": null
+  },
+  "summary": {
+    "configured_nlb_count": 0
+  },
+  "expected": {
+    "log_bucket_name": null,
+    "access_log_prefix": null,
+    "nlb_arns": []
+  },
+  "actual": {
+    "load_balancer_attributes": []
+  },
+  "validation": {
+    "all_access_logging_enabled": null,
+    "all_buckets_match_expected": null
+  }
+}
